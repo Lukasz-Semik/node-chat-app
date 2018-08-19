@@ -7,6 +7,6 @@ const app = express();
 
 app.use(express.static(publicPath));
 
-app.listen(8000, () => {
+app.listen(port, () => {
   console.log(`on ${port}`);
 });
