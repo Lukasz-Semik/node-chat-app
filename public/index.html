@@ -6,19 +6,30 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>Node Chat App</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- <link rel="stylesheet" type="text/css" media="screen" href="main.css" /> -->
+  <link rel="stylesheet" type="text/css" media="screen" href="css/styles.css" />
 </head>
 
-<body>
-  <p>Chat App</p>
-  <ol id="messages">
+<body class="chat">
+  <div class="chat__sidebar">
+    <h3>People</h3>
+    <div id="users">
 
-  </ol>
-  <form id="message-form">
-    <input name="message" type="text" placeholder="Message" />
-    <button>Send message</button>
-  </form>
-  <button id="send-location">Send Location</button>
+    </div>
+  </div>
+
+  <div class="chat__main">
+    <ol class="chat__messages" id="messages">
+
+    </ol>
+
+    <div class="chat__footer">
+      <form id="message-form">
+        <input name="message" type="text" placeholder="Message" autofocus autocomplete="off" />
+        <button>Send message</button>
+      </form>
+      <button id="send-location">Send Location</button>
+    </div>
+  </div>
 </body>
 
 

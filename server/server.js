@@ -40,7 +40,7 @@ io.on("connection", socket => {
 
     //for all connections
     io.emit("newMessage", generateMessage(message.from, message.text));
-    callback("this is from the server - acknolwedgment");
+    callback();
 
     // to everyone, except sender
     // socket.broadcast.emit("newMessage", {

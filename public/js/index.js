@@ -47,13 +47,16 @@ socket.emit(
 $("#message-form").on("submit", e => {
   e.preventDefault();
 
+  const messageTextbox = $('input[name="message"]');
   socket.emit(
     "createMessage",
     {
       from: "User",
-      text: $('input[name="message"]').val()
+      text: messageTextbox.val()
     },
-    () => {}
+    () => {
+      messageTextbox.val("");
+    }
   );
 });
 
@@ -63,13 +66,19 @@ locationButton.on("click", () => {
     return alert("No geolocation");
   }
 
+  locationButton.attr("disabled", "disabled").text("Sending...");
+
   navigator.geolocation.getCurrentPosition(
     position => {
+      locationButton.removeAttr("disabled").text("Send Location");
       socket.emit("createLocationMessage", {
         latitude: position.coords.latitude,
         longitude: position.coords.longitude
       });
     },
-    () => alert("faile fetching location")
+    () => {
+      locationButton.removeAttr("disabled").text("Send Location");
+      alert("faile fetching location");
+    }
   );
 });
