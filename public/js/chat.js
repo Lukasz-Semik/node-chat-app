@@ -20,8 +20,16 @@ const scrollToBottom = () => {
 };
 
 socket.on("connect", () => {
-  console.log("connected to server");
+  const params = $.deparam(window.location.search);
 
+  socket.emit("join", params, err => {
+    if (err) {
+      alert(err);
+      window.location.href = "/";
+    } else {
+      console.log("no error");
+    }
+  });
   // socket.emit("createMessage", {
   //   to: "jen@yo.com",
   //   text: "I am from client!"
@@ -30,6 +38,16 @@ socket.on("connect", () => {
 
 socket.on("disconnect", () => {
   console.log("disconnected");
+});
+
+socket.on("updateUserList", users => {
+  const ol = $("<ol></ol>");
+
+  users.forEach(user => {
+    ol.append($("<li></li>").text(user));
+  });
+
+  $("#users").html(ol);
 });
 
 socket.on("newMessage", message => {
@@ -72,16 +90,16 @@ socket.on("newLocationMessage", message => {
 });
 
 // acknowledgements
-socket.emit(
-  "createMessage",
-  {
-    from: "Frank",
-    text: "hi"
-  },
-  data => {
-    console.log(data);
-  }
-);
+// socket.emit(
+//   "createMessage",
+//   {
+//     from: "Frank",
+//     text: "hi"
+//   },
+//   data => {
+//     console.log(data);
+//   }
+// );
 
 $("#message-form").on("submit", e => {
   e.preventDefault();
@@ -90,7 +108,6 @@ $("#message-form").on("submit", e => {
   socket.emit(
     "createMessage",
     {
-      from: "User",
       text: messageTextbox.val()
     },
     () => {
